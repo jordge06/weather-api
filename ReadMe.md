@@ -42,7 +42,112 @@ server:
 
 weather:
   api:
-    weatherstack:
-      key: YOUR_WEATHERSTACK_API_KEY
-    openweathermap:
-      key: YOUR_OPENWEATHERMAP_API_KEY
+    weather_stack:
+      key: 'YOUR_API_KEY'
+      weather_url: 'http://api.weatherstack.com/current'
+    open_weather_map:
+      key: 'YOUR_API_KEY'
+      city_url: 'http://api.openweathermap.org/geo/1.0/direct'
+      weather_url: 'https://api.openweathermap.org/data/2.5/weather'
+```
+
+---
+
+## ▶ How to Build and Run
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/yourusername/weather-service.git
+cd weather-service
+```
+
+### 2. Configure API keys
+Edit `src/main/resources/application.yml` and set your API keys for Weatherstack and OpenWeatherMap.
+
+### 3. Build the project
+```bash
+mvn clean install
+```
+This will:
+- Compile the Java code
+- Download dependencies
+- Run unit tests
+- Package the application into a `.jar` file in the `target/` folder
+
+### 4. Run the application
+Run with Maven:
+```bash
+mvn spring-boot:run
+```
+Or run the packaged `.jar`:
+```bash
+java -jar target/weather-service-0.0.1-SNAPSHOT.jar
+```
+
+The application will be available at:
+```
+http://localhost:8080
+```
+
+---
+
+## 🌐 How to Call the API
+
+**Default city (Melbourne):**
+```bash
+curl "http://localhost:8080/v1/weather"
+```
+
+**Custom city:**
+```bash
+curl "http://localhost:8080/v1/weather?city=Sydney"
+```
+
+**Sample response:**
+```json
+{
+  "wind_speed": 20,
+  "temperature_degrees": 29
+}
+```
+
+---
+
+## 🧪 How to Run Tests
+Run all unit and controller tests:
+```bash
+mvn test
+```
+
+Tests cover:
+- **Service layer**: failover and caching behavior.
+- **Controller layer**: default city handling and JSON format.
+- **DTO serialization**: snake_case output verification.
+
+---
+
+## 📂 Project Structure
+```
+src/
+ ├── main/
+ │   ├── java/com/example/weather/
+ │   │   ├── controller/       # REST controllers
+ │   │   ├── service/          # Business logic & failover
+ │   │   ├── provider/         # Weather API integrations
+ │   │   ├── model/            # DTOs & response objects
+ │   │   ├── exception/        # Custom exceptions
+ │   └── resources/            # Config files (application.yml)
+ └── test/                     # Unit and controller tests
+```
+
+---
+
+## 📌 Notes
+- Weather results are cached for **3 seconds** to reduce API usage.
+- If both providers fail, the service will return cached data if available.
+- Ensure Lombok plugin is installed in IntelliJ and **annotation processing** is enabled.
+
+---
+
+## 📜 License
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
