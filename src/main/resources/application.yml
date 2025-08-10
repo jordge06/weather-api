@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+weather:
+  api:
+    weather_stack:
+      key: 'fffb34b246fb42505b9529cc132f4a0a'
+      weather_url: 'http://api.weatherstack.com/current'
+    open_weather_map:
+      key: '06c84ada46e2532413167eca81f5992e'
+      city_url: 'http://api.openweathermap.org/geo/1.0/direct'
+      weather_url: 'https://api.openweathermap.org/data/2.5/weather'
